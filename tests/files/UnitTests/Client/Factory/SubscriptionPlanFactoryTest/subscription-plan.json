@@ -1,0 +1,37 @@
+{
+  "links": {
+    "self": "https://api.ecurring.com/subscription-plans/1"
+  },
+  "data": {
+    "type": "subscription-plan",
+    "id": "1",
+    "links": {
+      "self": "https://api.ecurring.com/subscription-plans/1"
+    },
+    "attributes": {
+      "name": "One Size Fits All",
+      "description": "eCurring - One Size Fits All",
+      "start_date": "2017-01-01T00:00:00+02:00",
+      "status": "active",
+      "mandate_authentication_method": "online_payment",
+      "send_invoice": true,
+      "storno_retries": 1,
+      "terms": null,
+      "created_at": "2018-09-24T14:18:31+02:00",
+      "updated_at": "2018-09-24T14:18:31+02:00"
+    },
+    "relationships": {
+      "subscriptions": {
+        "links": {
+          "related": "https://api.ecurring.com/subscription-plans/1/subscriptions"
+        },
+        "data": [
+          {
+            "type": "subscription",
+            "id": "2862"
+          }
+        ]
+      }
+    }
+  }
+}

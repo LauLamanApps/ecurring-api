@@ -1,0 +1,79 @@
+{
+  "links": {
+    "self": "https://api.ecurring.com/transactions/ffa38848-6abc-4d22-b6b0-63fe1780969c"
+  },
+  "data": {
+    "type": "transaction",
+    "id": "ffa38848-6abc-4d22-b6b0-63fe1780969c",
+    "links": {
+      "self": "https://api.ecurring.com/transactions/ffa38848-6abc-4d22-b6b0-63fe1780969c"
+    },
+    "attributes": {
+      "status": "fulfilled",
+      "scheduled_on": "2017-11-01T11:35:00+01:00",
+      "due_date": "2017-11-07T00:00:00+01:00",
+      "amount": 50.6,
+      "canceled_on": null,
+      "webhook_url": null,
+      "payment_method": "directdebit",
+      "history": [
+        {
+          "attempt": 1,
+          "reason": null,
+          "reason_code": null,
+          "recorded_on": "2017-11-01T11:35:00+01:00",
+          "status": "scheduled",
+          "new_due_date": null
+        },
+        {
+          "attempt": 1,
+          "reason": null,
+          "reason_code": null,
+          "recorded_on": "2017-11-02T07:00:02+01:00",
+          "status": "succeeded",
+          "new_due_date": null
+        },
+        {
+          "attempt": 1,
+          "reason": null,
+          "reason_code": null,
+          "recorded_on": "2017-11-06T04:14:37+01:00",
+          "status": "fulfilled",
+          "new_due_date": null
+        },
+        {
+          "attempt": 1,
+          "reason": "Insufficient funds",
+          "reason_code": "AM04",
+          "recorded_on": "2017-11-10T03:43:23+01:00",
+          "status": "charged_back",
+          "new_due_date": null
+        },
+        {
+          "attempt": 1,
+          "reason": null,
+          "reason_code": null,
+          "recorded_on": "2017-11-10T03:43:23+01:00",
+          "status": "rescheduled",
+          "new_due_date": "2017-11-13T00:00:00+01:00"
+        },
+        {
+          "attempt": 2,
+          "reason": null,
+          "reason_code": null,
+          "recorded_on": "2017-11-13T07:00:00+01:00",
+          "status": "succeeded",
+          "new_due_date": null
+        },
+        {
+          "attempt": 2,
+          "reason": null,
+          "reason_code": null,
+          "recorded_on": "2017-11-14T03:54:52+01:00",
+          "status": "fulfilled",
+          "new_due_date": null
+        }
+      ]
+    }
+  }
+}
