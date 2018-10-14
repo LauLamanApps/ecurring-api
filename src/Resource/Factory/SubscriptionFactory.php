@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LauLamanApps\eCurring\Factory;
+namespace LauLamanApps\eCurring\Resource\Factory;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Proxy\CustomerProxy;
 use LauLamanApps\eCurring\Resource\Proxy\SubscriptionPlanProxy;
 use LauLamanApps\eCurring\Resource\Proxy\TransactionProxy;
@@ -18,7 +18,7 @@ use LauLamanApps\eCurring\Resource\SubscriptionCollection;
 
 final class SubscriptionFactory extends AbstractFactory implements SubscriptionFactoryInterface
 {
-    public function fromArray(eCurringClientInterface $client, array $data, Page $page): SubscriptionCollection
+    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): SubscriptionCollection
     {
         $subscriptions = [];
         foreach ($data['data'] as $data) {

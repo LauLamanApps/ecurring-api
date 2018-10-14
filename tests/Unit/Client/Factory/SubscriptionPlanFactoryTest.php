@@ -6,7 +6,7 @@ namespace LauLamanApps\eCurring\Tests\Unit\Client\Factory;
 
 use DateTime;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Factory\SubscriptionPlanFactory;
+use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactory;
 use LauLamanApps\eCurring\Resource\SubscriptionInterface;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\AssertionTrait;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\TestDataLoaderTrait;

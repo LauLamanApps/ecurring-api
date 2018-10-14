@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace LauLamanApps\eCurring;
 
-use LauLamanApps\eCurring\Factory\SubscriptionFactoryInterface;
-use LauLamanApps\eCurring\Factory\SubscriptionPlanFactoryInterface;
-use LauLamanApps\eCurring\Factory\TransactionFactoryInterface;
 use LauLamanApps\eCurring\Http\ClientInterface;
 use LauLamanApps\eCurring\Http\Endpoint\MapperInterface;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Customer;
+use LauLamanApps\eCurring\Resource\CustomerCollection;
+use LauLamanApps\eCurring\Resource\Factory\CustomerFactoryInterface;
+use LauLamanApps\eCurring\Resource\Factory\SubscriptionFactoryInterface;
+use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactoryInterface;
+use LauLamanApps\eCurring\Resource\Factory\TransactionFactoryInterface;
 use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionCollection;
 use LauLamanApps\eCurring\Resource\SubscriptionPlan;
@@ -40,27 +42,45 @@ final class eCurringClient implements eCurringClientInterface
      * @var SubscriptionFactoryInterface
      */
     private $subscriptionFactory;
+    /**
+     * @var CustomerFactoryInterface
+     */
+    private $customerFactory;
 
     public function __construct(
         ClientInterface $httpClient,
+        CustomerFactoryInterface $customerFactory,
         SubscriptionFactoryInterface $subscriptionFactory,
         SubscriptionPlanFactoryInterface $subscriptionPlanFactory,
         TransactionFactoryInterface $transactionFactory
     ) {
         $this->httpClient = $httpClient;
+        $this->customerFactory = $customerFactory;
         $this->subscriptionFactory = $subscriptionFactory;
         $this->subscriptionPlanFactory = $subscriptionPlanFactory;
         $this->transactionFactory = $transactionFactory;
     }
 
-    public function getCustomers(?Page $page = null): array
+    public function getCustomers(?Pagination $pagination = null): CustomerCollection
     {
-        // TODO: Implement getCustomers() method.
+        $json = $this->httpClient->getJson(
+            $this->httpClient->getEndpoint(MapperInterface::GET_CUSTOMERS, [], $pagination)
+        );
+
+        return $this->customerFactory->fromArray(
+            $this,
+            $this->decodeJsonToArray($json),
+            $pagination ?? new Pagination(10)
+        );
     }
 
     public function getCustomer(string $id): Customer
     {
-        // TODO: Implement getCustomer() method.
+        $json = $this->httpClient->getJson(
+            $this->httpClient->getEndpoint(MapperInterface::GET_CUSTOMER, [$id])
+        );
+
+        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json));
     }
 
     public function createCustomer(Customer $customer): Customer
@@ -73,16 +93,16 @@ final class eCurringClient implements eCurringClientInterface
         // TODO: Implement updateCustomer() method.
     }
 
-    public function getSubscriptionPlans(?Page $page = null): SubscriptionPlanCollection
+    public function getSubscriptionPlans(?Pagination $pagination = null): SubscriptionPlanCollection
     {
         $json = $this->httpClient->getJson(
-            $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_PLANS, [], $page)
+            $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_PLANS, [], $pagination)
         );
 
         return $this->subscriptionPlanFactory->fromArray(
             $this,
             $this->decodeJsonToArray($json),
-            $page ?? new Page(10)
+            $pagination ?? new Pagination(10)
         );
     }
 
@@ -95,7 +115,7 @@ final class eCurringClient implements eCurringClientInterface
         return $this->subscriptionPlanFactory->fromData($this, $this->decodeJsonToArray($json));
     }
 
-    public function getSubscriptions(?Page $page = null): SubscriptionCollection
+    public function getSubscriptions(?Pagination $page = null): SubscriptionCollection
     {
         $json = $this->httpClient->getJson(
             $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTIONS)
@@ -104,7 +124,7 @@ final class eCurringClient implements eCurringClientInterface
         return $this->subscriptionFactory->fromArray(
             $this,
             $this->decodeJsonToArray($json),
-            $page ?? new Page(10)
+            $page ?? new Pagination(10)
         );
     }
 
@@ -117,7 +137,7 @@ final class eCurringClient implements eCurringClientInterface
         return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json));
     }
 
-    public function getSubscriptionTransactions(Subscription $subscription, ?Page $page = null): SubscriptionTransactionCollection
+    public function getSubscriptionTransactions(Subscription $subscription, ?Pagination $pagination = null): SubscriptionTransactionCollection
     {
         $json = $this->httpClient->getJson(
             $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_TRANSACTIONS, [$subscription->getId()])
@@ -126,7 +146,7 @@ final class eCurringClient implements eCurringClientInterface
         return $this->transactionFactory->fromSubscriptionArray(
             $this,
             $this->decodeJsonToArray($json),
-            $page ?? new Page(10)
+            $pagination ?? new Pagination(10)
         );
     }
 
@@ -140,7 +160,7 @@ final class eCurringClient implements eCurringClientInterface
         // TODO: Implement updateSubscription() method.
     }
 
-    public function getTransactions(?Page $page = null): TransactionCollection
+    public function getTransactions(?Pagination $pagination = null): TransactionCollection
     {
         $json = $this->httpClient->getJson(
             $this->httpClient->getEndpoint(MapperInterface::GET_TRANSACTIONS)
@@ -149,7 +169,7 @@ final class eCurringClient implements eCurringClientInterface
         return $this->transactionFactory->fromArray(
             $this,
             $this->decodeJsonToArray($json),
-            $page ?? new Page(10)
+            $pagination ?? new Pagination(10)
         );
     }
 
@@ -169,7 +189,7 @@ final class eCurringClient implements eCurringClientInterface
 
     public function deleteTransaction(Transaction $transaction): void
     {
-        // TODO: Implement deleteTransaction() method.
+        $this->httpClient->deleteEndpoint(MapperInterface::DELETE_TRANSACTION, [$transaction->getId()]);
     }
 
     private function decodeJsonToArray(string $json): array

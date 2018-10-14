@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LauLamanApps\eCurring\Factory\Transaction;
+namespace LauLamanApps\eCurring\Resource\Factory\Transaction;
 
 use LauLamanApps\eCurring\Resource\Transaction\Event;
 

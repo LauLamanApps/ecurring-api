@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Tests\Unit\Client\Factory;
 
 use DateTime;
-use LauLamanApps\eCurring\eCurringClientFactory;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Factory\SubscriptionFactory;
-use LauLamanApps\eCurring\Resource\Subscription\Mandate;
+use LauLamanApps\eCurring\Resource\Factory\SubscriptionFactory;
 use LauLamanApps\eCurring\Resource\TransactionInterface;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\AssertionTrait;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\TestDataLoaderTrait;

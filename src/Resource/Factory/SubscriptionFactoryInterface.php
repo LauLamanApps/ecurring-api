@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LauLamanApps\eCurring\Factory;
+namespace LauLamanApps\eCurring\Resource\Factory;
 
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionCollection;
 
@@ -16,5 +16,5 @@ interface SubscriptionFactoryInterface
     /**
      * @return Subscription[]
      */
-    public function fromArray(eCurringClientInterface $client, array $data, Page $page): SubscriptionCollection;
+    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): SubscriptionCollection;
 }

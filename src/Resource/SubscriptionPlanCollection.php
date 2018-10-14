@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LauLamanApps\eCurring\Resource;
 
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 
 /**
  * @method SubscriptionPlan[] getAll()
@@ -12,10 +12,8 @@ use LauLamanApps\eCurring\Resource\Curser\Page;
  */
 final class SubscriptionPlanCollection extends Cursor
 {
-    protected function loadPage(int $number, int $itemsPerPage): array
+    protected function getPageData(int $pageNumber, int $itemsPerPage): Cursor
     {
-        $cursor = $this->client->getSubscriptionPlans(new Page($itemsPerPage, $number));
-
-        return $cursor->getAll();
+        return $this->client->getSubscriptionPlans(new Pagination($itemsPerPage, $pageNumber));
     }
 }

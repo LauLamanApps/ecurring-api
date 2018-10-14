@@ -6,7 +6,7 @@ namespace LauLamanApps\eCurring\Resource\Curser;
 
 use LauLamanApps\eCurring\Resource\Exception\NonExistentPageNumberException;
 
-final class Page
+final class Pagination
 {
     /**
      * @var int
@@ -21,14 +21,14 @@ final class Page
     /**
      * @throws NonExistentPageNumberException
      */
-    public function __construct(int $size, ?int $number = 1)
+    public function __construct(int $size, ?int $page = 1)
     {
-        if ($number < 1) {
+        if ($page < 1) {
             throw new NonExistentPageNumberException('Page number can not be lower than 1');
         }
 
         $this->size = $size;
-        $this->number = $number;
+        $this->number = $page;
     }
 
     public function getSize(): int

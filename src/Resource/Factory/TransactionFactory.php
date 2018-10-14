@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LauLamanApps\eCurring\Factory;
+namespace LauLamanApps\eCurring\Resource\Factory;
 
 use DateTimeImmutable;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Factory\Transaction\EventFactoryInterface;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactoryInterface;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionTransactionCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
@@ -29,7 +29,7 @@ final class TransactionFactory extends AbstractFactory implements TransactionFac
         $this->eventFactory = $eventFactory;
     }
 
-    public function fromArray(eCurringClientInterface $client, array $data, Page $page): TransactionCollection
+    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): TransactionCollection
     {
         $transactions = [];
         foreach ($data['data'] as $data) {
@@ -40,7 +40,7 @@ final class TransactionFactory extends AbstractFactory implements TransactionFac
         return new TransactionCollection($client, $page->getNumber(), $totalPages, $transactions);
     }
 
-    public function fromSubscriptionArray(eCurringClientInterface $client, array $data, Subscription $subscription, Page $page): SubscriptionTransactionCollection
+    public function fromSubscriptionArray(eCurringClientInterface $client, array $data, Subscription $subscription, Pagination $page): SubscriptionTransactionCollection
     {
         $transactions = [];
         foreach ($data['data'] as $data) {

@@ -1,0 +1,50 @@
+{
+  "links": {
+    "self": "https://api.ecurring.com/customers/1"
+  },
+  "data": {
+    "type": "customer",
+    "id": "1",
+    "links": {
+      "self": "https://api.ecurring.com/customers/1"
+    },
+    "attributes": {
+      "gender": "m",
+      "first_name": "Jeroen",
+      "middle_name": null,
+      "last_name": "van der Geer",
+      "company_name": null,
+      "vat_number": null,
+      "bank_holder": "J van der Geer",
+      "iban": "NL66ECUR0123456789",
+      "payment_method": "directdebit",
+      "bank_verification_method": null,
+      "card_holder": "J van der Geer",
+      "card_number": "6789",
+      "postalcode": "1016EE",
+      "house_number": "313",
+      "house_number_add": "",
+      "street": "Keizersgracht",
+      "city": "Amsterdam",
+      "country_iso2": "NL",
+      "language": "nl",
+      "email": "support@ecurring.com",
+      "telephone": "+31202616739",
+      "created_at": "2018-02-01T11:21:09+01:00",
+      "updated_at": "2018-02-01T11:21:09+01:00"
+    },
+    "relationships": {
+      "subscriptions": {
+        "links": {
+          "related": "https://api.ecurring.com/customers/1/subscriptions"
+        },
+        "data": [
+          {
+            "type": "subscription",
+            "id": "1"
+          }
+        ]
+      }
+    }
+  }
+}

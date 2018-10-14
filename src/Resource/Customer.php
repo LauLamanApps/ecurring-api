@@ -17,7 +17,7 @@ final class Customer implements CustomerInterface
     private $id;
 
     /**
-     * @var Gender
+     * @var Gender|null
      *
      * The gender of the customer.
      * Used to determine the salutation in communication with the customer. Possible values: m / f
@@ -46,14 +46,14 @@ final class Customer implements CustomerInterface
     private $lastName;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The name of the company of the customer
      */
     private $companyName;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The vat number of the company of the customer
      */
@@ -90,14 +90,14 @@ final class Customer implements CustomerInterface
     private $cardNumber;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The postalcode of the address of the customer
      */
     private $postalcode;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The house number of the address of the customer
      */
@@ -111,28 +111,28 @@ final class Customer implements CustomerInterface
     private $houseNumberAdd;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The street of the address of the customer
      */
     private $street;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The city of the address of the customer
      */
     private $city;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The 2 letter ISO code of the country of residence of the customer
      */
     private $countryCode;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The preferred communication language of the customer.
      * Any notifications sent to the customer will be in this language.
@@ -148,7 +148,7 @@ final class Customer implements CustomerInterface
     private $email;
 
     /**
-     * @var string
+     * @var string|null
      *
      * The telephone number of the customer
      */
@@ -175,12 +175,113 @@ final class Customer implements CustomerInterface
      */
     private $updatedAt;
 
+    private function __construct()
+    {
+    }
+
+    public static function new(
+        string $firstName,
+        string $lastName,
+        PaymentMethod $paymentType,
+        string $cardHolder,
+        string $cardNumber,
+        string $email,
+        ?Gender $gender = null,
+        ?string $middleName = null,
+        ?string $companyName = null,
+        ?string $vatNumber = null,
+        ?string $postalcode = null,
+        ?string $houseNumber = null,
+        ?string $houseNumberAdd = null,
+        ?string $street = null,
+        ?string $city = null,
+        ?string $countryCode = null,
+        ?string $language = null,
+        ?string $telephone = null
+    ): self {
+        $self = new self();
+        $self->gender = $gender;
+        $self->firstName = $firstName;
+        $self->lastName = $lastName;
+        $self->paymentType = $paymentType;
+        $self->cardHolder = $cardHolder;
+        $self->cardNumber = $cardNumber;
+        $self->email = $email;
+        $self->middleName = $middleName;
+        $self->companyName = $companyName;
+        $self->vatNumber = $vatNumber;
+        $self->postalcode = $postalcode;
+        $self->houseNumber = $houseNumber;
+        $self->houseNumberAdd = $houseNumberAdd;
+        $self->street = $street;
+        $self->city = $city;
+        $self->countryCode = $countryCode;
+        $self->language = $language;
+        $self->telephone = $telephone;
+
+        return $self;
+    }
+
+    public static function fromData(
+        int $id,
+        string $firstName,
+        string $lastName,
+        PaymentMethod $paymentType,
+        string $cardHolder,
+        string $cardNumber,
+        string $email,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt,
+        ?Gender $gender = null,
+        ?string $middleName = null,
+        ?string $companyName = null,
+        ?string $vatNumber = null,
+        ?string $postalcode = null,
+        ?string $houseNumber = null,
+        ?string $houseNumberAdd = null,
+        ?string $street = null,
+        ?string $city = null,
+        ?string $countryCode = null,
+        ?string $language = null,
+        ?string $telephone = null,
+        ?VerificationMethod $bankVerificationMethod = null,
+        ?SubscriptionInterface ...$subscriptions
+    ): self {
+        $self = new self();
+        $self->id = $id;
+        $self->firstName = $firstName;
+        $self->lastName = $lastName;
+        $self->paymentType = $paymentType;
+        $self->cardHolder = $cardHolder;
+        $self->cardNumber = $cardNumber;
+        $self->email = $email;
+        $self->createdAt = $createdAt;
+        $self->updatedAt = $updatedAt;
+        $self->gender = $gender;
+        $self->companyName = $companyName;
+        $self->vatNumber = $vatNumber;
+        $self->postalcode = $postalcode;
+        $self->houseNumber = $houseNumber;
+        $self->houseNumberAdd = $houseNumberAdd;
+        $self->street = $street;
+        $self->city = $city;
+        $self->countryCode = $countryCode;
+        $self->language = $language;
+        $self->telephone = $telephone;
+        $self->middleName = $middleName;
+        $self->bankVerificationMethod = $bankVerificationMethod;
+        $self->subscriptions = $subscriptions;
+
+        return $self;
+    }
+
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getGender(): Gender
+    public function getGender(): ?Gender
     {
         return $this->gender;
     }
@@ -200,12 +301,12 @@ final class Customer implements CustomerInterface
         return $this->lastName;
     }
 
-    public function getCompanyName(): string
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
 
-    public function getVatNumber(): string
+    public function getVatNumber(): ?string
     {
         return $this->vatNumber;
     }
@@ -230,12 +331,12 @@ final class Customer implements CustomerInterface
         return $this->cardNumber;
     }
 
-    public function getPostalcode(): string
+    public function getPostalcode(): ?string
     {
         return $this->postalcode;
     }
 
-    public function getHouseNumber(): string
+    public function getHouseNumber(): ?string
     {
         return $this->houseNumber;
     }
@@ -245,22 +346,22 @@ final class Customer implements CustomerInterface
         return $this->houseNumberAdd;
     }
 
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function getCountryCode(): string
+    public function getCountryCode(): ?string
     {
         return $this->countryCode;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -270,11 +371,14 @@ final class Customer implements CustomerInterface
         return $this->email;
     }
 
-    public function getTelephone(): string
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
+    /**
+     * @return SubscriptionInterface[]
+     */
     public function getSubscriptions(): array
     {
         return $this->subscriptions;

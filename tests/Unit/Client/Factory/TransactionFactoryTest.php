@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Tests\Unit\Client\Factory;
 
 use DateTime;
-use LauLamanApps\eCurring\Factory\Transaction\EventFactoryInterface;
-use LauLamanApps\eCurring\Factory\TransactionFactory;
+use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactoryInterface;
+use LauLamanApps\eCurring\Resource\Factory\TransactionFactory;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\AssertionTrait;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\TestDataLoaderTrait;
 use Mockery;

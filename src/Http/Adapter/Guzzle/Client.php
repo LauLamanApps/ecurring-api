@@ -13,7 +13,7 @@ use LauLamanApps\eCurring\Http\ClientInterface;
 use LauLamanApps\eCurring\Http\Endpoint\Exception\EndpointCouldNotBeMappedException;
 use LauLamanApps\eCurring\Http\Endpoint\MapperInterface;
 use LauLamanApps\eCurring\Http\Exception\ApiCallException;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use Psr\Http\Message\ResponseInterface;
 
 final class Client implements ClientInterface
@@ -41,7 +41,7 @@ final class Client implements ClientInterface
      * @throws eCurringException
      * @throws NotFoundException
      */
-    public function getEndpoint(string $endpoint, ?array $urlBits = [], ?Page $page = null): ResponseInterface
+    public function getEndpoint(string $endpoint, ?array $urlBits = [], ?Pagination $page = null): ResponseInterface
     {
         $options = $page ? ['query' => $page->getQueryOptions()] : [];
 

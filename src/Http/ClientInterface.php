@@ -3,7 +3,7 @@
 namespace LauLamanApps\eCurring\Http;
 
 use LauLamanApps\eCurring\Http\Exception\ApiCallException;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use Psr\Http\Message\ResponseInterface;
 
 interface ClientInterface
@@ -11,7 +11,7 @@ interface ClientInterface
     /**
      * @throws ApiCallException
      */
-    public function getEndpoint(string $endpoint, ?array $urlBits = [], ?Page $page = null): ResponseInterface;
+    public function getEndpoint(string $endpoint, ?array $urlBits = [], ?Pagination $page = null): ResponseInterface;
 
     /**
      * @throws ApiCallException

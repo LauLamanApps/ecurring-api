@@ -24,7 +24,7 @@ interface MapperInterface
 
     public const GET_TRANSACTIONS = 'get_transactions';
     public const GET_TRANSACTION = 'get_transaction';
-    public const DELETE_TRANSACTIONS = 'delete_transactions';
+    public const DELETE_TRANSACTION = 'delete_transactions';
 
     /**
      * @throws EndpointCouldNotBeMappedException

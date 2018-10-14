@@ -28,7 +28,7 @@ final class Production implements MapperInterface
 
     public const GET_TRANSACTIONS_ENDPOINT = '/transactions';
     public const GET_TRANSACTION_ENDPOINT = '/transactions/%s';
-    public const DELETE_TRANSACTIONS_ENDPOINT = '/transactions/%s';
+    public const DELETE_TRANSACTION_ENDPOINT = '/transactions/%s';
 
     private $map = [];
 
@@ -51,7 +51,7 @@ final class Production implements MapperInterface
 
             MapperInterface::GET_TRANSACTIONS => self::BASE_URL . self::GET_TRANSACTIONS_ENDPOINT,
             MapperInterface::GET_TRANSACTION => self::BASE_URL . self::GET_TRANSACTION_ENDPOINT,
-            MapperInterface::DELETE_TRANSACTIONS => self::BASE_URL . self::DELETE_TRANSACTIONS_ENDPOINT,
+            MapperInterface::DELETE_TRANSACTION => self::BASE_URL . self::DELETE_TRANSACTION_ENDPOINT,
         ];
     }
 

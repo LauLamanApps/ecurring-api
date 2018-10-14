@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LauLamanApps\eCurring\Factory;
+namespace LauLamanApps\eCurring\Resource\Factory;
 
 use DateTimeImmutable;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Proxy\SubscriptionProxy;
 use LauLamanApps\eCurring\Resource\SubscriptionPlan;
 use LauLamanApps\eCurring\Resource\SubscriptionPlan\AuthenticationMethod;
@@ -15,7 +15,7 @@ use LauLamanApps\eCurring\Resource\SubscriptionPlanCollection;
 
 final class SubscriptionPlanFactory extends AbstractFactory implements SubscriptionPlanFactoryInterface
 {
-    public function fromArray(eCurringClientInterface $client, array $data, Page $page): SubscriptionPlanCollection
+    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): SubscriptionPlanCollection
     {
         $transactions = [];
         foreach ($data['data'] as $data) {
@@ -24,7 +24,7 @@ final class SubscriptionPlanFactory extends AbstractFactory implements Subscript
 
         $totalPages = $data['meta']['total'];
 
-        return new SubscriptionPlanCollection($client, $page->getNumber(), $totalPages ?? 1, $transactions);
+        return new SubscriptionPlanCollection($client, $page->getNumber(), $totalPages ?? 1, $transactions, $page->getSize());
     }
 
     public function fromData(eCurringClientInterface $client, array $data): SubscriptionPlan

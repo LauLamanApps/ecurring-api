@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Resource\Curser\Page;
+use LauLamanApps\eCurring\Resource\Curser\Pagination;
 
 /**
  * @method Transaction[] getAll()
@@ -34,7 +34,7 @@ final class SubscriptionTransactionCollection extends Cursor
 
     protected function loadPage(int $number, int $itemsPerPage): array
     {
-        $cursor = $this->client->getSubscriptionTransactions($this->subscription, new Page($itemsPerPage, $number));
+        $cursor = $this->client->getSubscriptionTransactions($this->subscription, new Pagination($itemsPerPage, $number));
 
         return $cursor->getAll();
     }

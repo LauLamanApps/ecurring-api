@@ -113,7 +113,7 @@ abstract class Cursor implements Iterator
      */
     public function firstPage(): void
     {
-        $this->objects = $this->loadPage(0, $this->itemsPerPage);
+        $this->loadPage(0, $this->itemsPerPage);
     }
 
     /**
@@ -122,7 +122,9 @@ abstract class Cursor implements Iterator
     public function nextPage(): void
     {
         $pageNumber = $this->currentPage +1;
-        $this->objects = $this->loadPage($pageNumber, $this->itemsPerPage);
+        if ($pageNumber >= $this->totalPages){
+            $this->loadPage($pageNumber, $this->itemsPerPage);
+        }
     }
 
     /**
@@ -132,7 +134,7 @@ abstract class Cursor implements Iterator
     {
         $pageNumber = $this->currentPage -1;
         if ($pageNumber < 0) {
-            $this->objects = $this->loadPage($pageNumber, $this->itemsPerPage);
+            $this->loadPage($pageNumber, $this->itemsPerPage);
         }
     }
 
@@ -142,7 +144,7 @@ abstract class Cursor implements Iterator
     public function goToPage(int $pageNumber): void
     {
         if ($pageNumber < 0 && $pageNumber >= $this->totalPages) {
-            $this->objects = $this->loadPage($pageNumber, $this->itemsPerPage);
+            $this->loadPage($pageNumber, $this->itemsPerPage);
         } else {
             throw new NonExistentPageNumberException(sprintf('Page number #%s is invalid', $pageNumber));
         }
@@ -153,11 +155,18 @@ abstract class Cursor implements Iterator
      */
     public function lastPage(): void
     {
-        $this->objects = $this->loadPage($this->totalPages, $this->itemsPerPage);
+        $this->loadPage($this->totalPages, $this->itemsPerPage);
     }
 
     /**
      * @throws NonExistentPageNumberException
      */
-    abstract protected function loadPage(int $no, int $itemsPerPage): array ;
+    private function loadPage(int $pageNumber, int $itemsPerPage): void
+    {
+        $this->objects = $this->getPageData($pageNumber, $itemsPerPage)->getAll();
+        $this->position = 0;
+        $this->currentPage = $pageNumber;
+    }
+
+    abstract protected function getPageData(int $pageNumber, int $itemsPerPage): self;
 }
