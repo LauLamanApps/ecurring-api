@@ -155,7 +155,7 @@ final class Customer implements CustomerInterface
     private $telephone;
 
     /**
-     * @var Subscription[]
+     * @var SubscriptionInterface[]
      *
      * The subscriptions of the customers
      */

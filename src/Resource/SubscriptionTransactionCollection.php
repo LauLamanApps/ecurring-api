@@ -32,10 +32,8 @@ final class SubscriptionTransactionCollection extends Cursor
         $this->subscription = $subscription;
     }
 
-    protected function loadPage(int $number, int $itemsPerPage): array
+    protected function getPageData(int $number, int $itemsPerPage): Cursor
     {
-        $cursor = $this->client->getSubscriptionTransactions($this->subscription, new Pagination($itemsPerPage, $number));
-
-        return $cursor->getAll();
+        return $this->client->getSubscriptionTransactions($this->subscription, new Pagination($itemsPerPage, $number));
     }
 }

@@ -12,6 +12,7 @@ use LauLamanApps\eCurring\Resource\SubscriptionInterface;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\AssertionTrait;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\TestDataLoaderTrait;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
 final class CustomerFactoryTest extends TestCase
@@ -60,10 +61,10 @@ final class CustomerFactoryTest extends TestCase
         self::assertEquals($data['data']['attributes']['house_number_add'], $customer->getHouseNumberAdd());
         self::assertEquals($data['data']['attributes']['street'], $customer->getStreet());
         self::assertEquals($data['data']['attributes']['city'], $customer->getCity());
-        self::assertEquals($data['data']['attributes']['country_code'], $customer->getCountryCode());
+        self::assertEquals($data['data']['attributes']['country_iso2'], $customer->getCountryCode());
         self::assertEquals($data['data']['attributes']['language'], $customer->getLanguage());
         self::assertEquals($data['data']['attributes']['telephone'], $customer->getTelephone());
-        self::assertEnumOrNull($data['data']['attributes']['bank_Verification_Method'], VerificationMethod::class, $customer->getBankVerificationMethod());
+        self::assertEnumOrNull($data['data']['attributes']['bank_verification_method'], VerificationMethod::class, $customer->getBankVerificationMethod());
 
         self::assertSubscriptions($data['data'], ...$customer->getSubscriptions());
     }

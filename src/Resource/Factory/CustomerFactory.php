@@ -48,7 +48,7 @@ final class CustomerFactory extends AbstractFactory implements CustomerFactoryIn
             $this->extractStringOrNull('house_number_add', $data['attributes']),
             $this->extractStringOrNull('street', $data['attributes']),
             $this->extractStringOrNull('city', $data['attributes']),
-            $this->extractStringOrNull('country_code', $data['attributes']),
+            $this->extractStringOrNull('country_iso2', $data['attributes']),
             $this->extractStringOrNull('language', $data['attributes']),
             $this->extractStringOrNull('telephone', $data['attributes']),
             $data['attributes']['bank_verification_method'] === null ? null : VerificationMethod::get($data['attributes']['bank_verification_method']),

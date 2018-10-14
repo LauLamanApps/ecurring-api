@@ -7,6 +7,7 @@ namespace LauLamanApps\eCurring;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use LauLamanApps\eCurring\Resource\Factory\CustomerFactory;
 use LauLamanApps\eCurring\Resource\Factory\SubscriptionFactory;
 use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactory;
 use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactory;
@@ -22,6 +23,7 @@ final class eCurringClientFactory
     {
         return new eCurringClient(
             self::createHttpClient($apiKey),
+            new CustomerFactory(),
             new SubscriptionFactory(),
             new SubscriptionPlanFactory(),
             new TransactionFactory(new EventFactory())

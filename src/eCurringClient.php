@@ -146,6 +146,7 @@ final class eCurringClient implements eCurringClientInterface
         return $this->transactionFactory->fromSubscriptionArray(
             $this,
             $this->decodeJsonToArray($json),
+            $subscription,
             $pagination ?? new Pagination(10)
         );
     }
