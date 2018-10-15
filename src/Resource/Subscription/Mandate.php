@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource\Subscription;
 
 use DateTimeImmutable;
+use LauLamanApps\eCurring\Resource\Subscription\Exception\MandateAlreadyAcceptedException;
+use LauLamanApps\eCurring\Resource\Subscription\Exception\MandateInvalidException;
 
 final class Mandate
 {
@@ -24,17 +26,25 @@ final class Mandate
     private $accepted;
 
     /**
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      *
      * The date on which the mandate has been accepted.
      */
     private $acceptedDate;
 
-    public function __construct(string $code, bool $accepted, DateTimeImmutable $acceptedDate)
-    {
+    /**
+     * @throws MandateInvalidException
+     */
+    public function __construct(
+        string $code,
+        ?bool $accepted = false,
+        ?DateTimeImmutable $acceptedDate = null
+    ) {
         $this->code = $code;
         $this->accepted = $accepted;
         $this->acceptedDate = $acceptedDate;
+
+        $this->validate();
     }
 
     public function getCode(): string
@@ -42,13 +52,38 @@ final class Mandate
         return $this->code;
     }
 
-    public function isAccepted(): bool
+    public function isAccepted(): ?bool
     {
         return $this->accepted;
     }
 
-    public function getAcceptedDate(): DateTimeImmutable
+    public function getAcceptedDate(): ?DateTimeImmutable
     {
         return $this->acceptedDate;
+    }
+
+    /**
+     * @throws MandateAlreadyAcceptedException
+     */
+    public function accept(DateTimeImmutable $acceptedDate): void
+    {
+        if ($this->accepted === true) {
+            throw new MandateAlreadyAcceptedException(
+                sprintf('Mandate already accepted on %s', $this->acceptedDate->format('Y-m-d H:i:s'))
+            );
+        }
+
+        $this->accepted = true;
+        $this->acceptedDate = $acceptedDate;
+    }
+
+    /**
+     * @throws MandateInvalidException
+     */
+    private function validate(): void
+    {
+        if ($this->accepted && $this->getAcceptedDate() === null) {
+            throw new MandateInvalidException('No AcceptedDate provided although the mandate is accepted.');
+        }
     }
 }

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
+use LauLamanApps\eCurring\Http\Resource\Creatable;
 use LauLamanApps\eCurring\Resource\Transaction\Event;
 use LauLamanApps\eCurring\Resource\Transaction\PaymentMethod;
 use LauLamanApps\eCurring\Resource\Transaction\Status;
 use Money\Money;
 use Ramsey\Uuid\UuidInterface;
 
-final class Transaction implements TransactionInterface
+final class Transaction implements TransactionInterface, Creatable
 {
     /**
      * @var UuidInterface
@@ -98,7 +99,7 @@ final class Transaction implements TransactionInterface
     public static function new(
         Subscription $subscription,
         Money $amount,
-        DateTimeImmutable $dueDate
+        ?DateTimeImmutable $dueDate = null
     ): self {
         $self = new self($amount);
         $self->dueDate = $dueDate;
@@ -175,5 +176,10 @@ final class Transaction implements TransactionInterface
     public function getHistory(): array
     {
         return $this->history;
+    }
+
+    public function getSubscription(): ?Subscription
+    {
+        return $this->subscription;
     }
 }

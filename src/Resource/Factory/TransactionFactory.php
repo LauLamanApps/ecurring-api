@@ -9,11 +9,10 @@ use LauLamanApps\eCurring\eCurringClientInterface;
 use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactoryInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Subscription;
-use LauLamanApps\eCurring\Resource\SubscriptionTransactionCollection;
+use LauLamanApps\eCurring\Resource\TransactionCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
 use LauLamanApps\eCurring\Resource\Transaction\PaymentMethod;
 use LauLamanApps\eCurring\Resource\Transaction\Status;
-use LauLamanApps\eCurring\Resource\TransactionCollection;
 use Money\Money;
 use Ramsey\Uuid\Uuid;
 
@@ -29,7 +28,7 @@ final class TransactionFactory extends AbstractFactory implements TransactionFac
         $this->eventFactory = $eventFactory;
     }
 
-    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): TransactionCollection
+    public function fromSubscriptionArray(eCurringClientInterface $client, array $data, Subscription $subscription, Pagination $page): TransactionCollection
     {
         $transactions = [];
         foreach ($data['data'] as $data) {
@@ -37,18 +36,7 @@ final class TransactionFactory extends AbstractFactory implements TransactionFac
         }
         $totalPages = $this->extractInteger('total', $data['meta']);
 
-        return new TransactionCollection($client, $page->getNumber(), $totalPages, $transactions);
-    }
-
-    public function fromSubscriptionArray(eCurringClientInterface $client, array $data, Subscription $subscription, Pagination $page): SubscriptionTransactionCollection
-    {
-        $transactions = [];
-        foreach ($data['data'] as $data) {
-            $transactions[] = $this->fromData($data);
-        }
-        $totalPages = $this->extractInteger('total', $data['meta']);
-
-        return new SubscriptionTransactionCollection($subscription, $client, $page->getNumber(), $totalPages, $transactions);
+        return new TransactionCollection($subscription, $client, $page->getNumber(), $totalPages, $transactions);
     }
 
     public function fromData(array $data): Transaction

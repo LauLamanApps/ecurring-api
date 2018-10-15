@@ -21,17 +21,17 @@ interface ClientInterface
     /**
      * @throws ApiCallException
      */
-    public function postEndpoint(string $endpoint, array $param, ?array $urlBits = []);
+    public function postEndpoint(string $endpoint, array $param, ?array $urlBits = []): ResponseInterface;
 
     /**
      * @throws ApiCallException
      */
-    public function patchEndpoint(string $endpoint, array $param, ?array $urlBits = []);
+    public function patchEndpoint(string $endpoint, array $param, ?array $urlBits = []): ResponseInterface;
 
     /**
      * @throws ApiCallException
      */
-    public function deleteEndpoint(string $endpoint, array $param, ?array $urlBits = []);
+    public function deleteEndpoint(string $endpoint, array $param, ?array $urlBits = []): void;
 
     public function getJson(ResponseInterface $response): string;
 }

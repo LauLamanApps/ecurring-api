@@ -11,7 +11,6 @@ use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionCollection;
 use LauLamanApps\eCurring\Resource\SubscriptionPlan;
 use LauLamanApps\eCurring\Resource\SubscriptionPlanCollection;
-use LauLamanApps\eCurring\Resource\SubscriptionTransactionCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
 use LauLamanApps\eCurring\Resource\TransactionCollection;
 use Ramsey\Uuid\UuidInterface;
@@ -46,16 +45,11 @@ interface eCurringClientInterface
     /**
      * @return Transaction[]
      */
-    public function getSubscriptionTransactions(Subscription $subscription, ?Pagination $pagination = null): SubscriptionTransactionCollection;
+    public function getSubscriptionTransactions(Subscription $subscription, ?Pagination $pagination = null): TransactionCollection;
 
     public function createSubscription(Subscription $subscription): Subscription;
 
     public function updateSubscription(Subscription $subscription): Subscription;
-
-    /**
-     * @return Transaction[]
-     */
-    public function getTransactions(?Pagination $pagination = null): TransactionCollection;
 
     public function getTransaction(UuidInterface $id): Transaction;
 

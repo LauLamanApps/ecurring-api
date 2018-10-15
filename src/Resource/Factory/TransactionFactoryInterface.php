@@ -7,9 +7,8 @@ namespace LauLamanApps\eCurring\Resource\Factory;
 use LauLamanApps\eCurring\eCurringClientInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Subscription;
-use LauLamanApps\eCurring\Resource\SubscriptionTransactionCollection;
-use LauLamanApps\eCurring\Resource\Transaction;
 use LauLamanApps\eCurring\Resource\TransactionCollection;
+use LauLamanApps\eCurring\Resource\Transaction;
 
 interface TransactionFactoryInterface
 {
@@ -18,12 +17,10 @@ interface TransactionFactoryInterface
     /**
      * @return Transaction[]
      */
-    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): TransactionCollection;
-
     public function fromSubscriptionArray(
         eCurringClientInterface $client,
         array $data,
         Subscription $subscription,
         Pagination $page
-    ): SubscriptionTransactionCollection;
+    ): TransactionCollection;
 }

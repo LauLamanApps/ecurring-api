@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
+use LauLamanApps\eCurring\Http\Resource\Updatable;
+use LauLamanApps\eCurring\Http\Resource\Creatable;
 use LauLamanApps\eCurring\Resource\Customer\Gender;
 use LauLamanApps\eCurring\Resource\Customer\VerificationMethod;
 use LauLamanApps\eCurring\Resource\Transaction\PaymentMethod;
 
-final class Customer implements CustomerInterface
+final class Customer implements CustomerInterface, Creatable, Updatable
 {
     /**
      * @var int
@@ -275,6 +277,95 @@ final class Customer implements CustomerInterface
         return $self;
     }
 
+    public function setGender(?Gender $gender): void
+    {
+        $this->gender = $gender;
+    }
+
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setMiddleName(?string $middleName): void
+    {
+        $this->middleName = $middleName;
+    }
+
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setCompanyName(?string $companyName): void
+    {
+        $this->companyName = $companyName;
+    }
+
+    public function setVatNumber(?string $vatNumber): void
+    {
+        $this->vatNumber = $vatNumber;
+    }
+
+    public function setPaymentType(PaymentMethod $paymentType): void
+    {
+        $this->paymentType = $paymentType;
+    }
+
+    public function setBankVerificationMethod(?VerificationMethod $bankVerificationMethod): void
+    {
+        $this->bankVerificationMethod = $bankVerificationMethod;
+    }
+
+    public function setCardHolder(string $cardHolder): void
+    {
+        $this->cardHolder = $cardHolder;
+    }
+
+    public function setCardNumber(string $cardNumber): void
+    {
+        $this->cardNumber = $cardNumber;
+    }
+
+    public function setPostalcode(?string $postalcode): void
+    {
+        $this->postalcode = $postalcode;
+    }
+
+    public function setHouseNumber(?string $houseNumber): void
+    {
+        $this->houseNumber = $houseNumber;
+    }
+
+    public function setHouseNumberAdd(?string $houseNumberAdd): void
+    {
+        $this->houseNumberAdd = $houseNumberAdd;
+    }
+
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
+    }
+
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    public function setCountryCode(?string $countryCode): void
+    {
+        $this->countryCode = $countryCode;
+    }
+
+    public function setLanguage(?string $language): void
+    {
+        $this->language = $language;
+    }
+
+    public function setTelephone(?string $telephone): void
+    {
+        $this->telephone = $telephone;
+    }
 
     public function getId(): int
     {

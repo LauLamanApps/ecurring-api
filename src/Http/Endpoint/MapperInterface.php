@@ -22,8 +22,8 @@ interface MapperInterface
     public const PATCH_SUBSCRIPTION = 'patch_subscription';
     public const GET_SUBSCRIPTION_TRANSACTIONS = 'get_subscription_transactions';
 
-    public const GET_TRANSACTIONS = 'get_transactions';
     public const GET_TRANSACTION = 'get_transaction';
+    public const POST_TRANSACTION = 'get_transaction';
     public const DELETE_TRANSACTION = 'delete_transactions';
 
     /**

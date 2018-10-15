@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
+use LauLamanApps\eCurring\Http\Resource\Updatable;
+use LauLamanApps\eCurring\Http\Resource\Creatable;
+use LauLamanApps\eCurring\Resource\Exception\MandateNotAcceptedException;
 use LauLamanApps\eCurring\Resource\Subscription\Mandate;
 use LauLamanApps\eCurring\Resource\Subscription\Status;
 
-final class Subscription implements SubscriptionInterface
+final class Subscription implements SubscriptionInterface, Creatable, Updatable
 {
     /**
      * @var int
@@ -196,7 +199,49 @@ final class Subscription implements SubscriptionInterface
         return $self;
     }
 
-    public function getId(): int
+    /**
+     * @throws MandateNotAcceptedException
+     */
+    public function activate(): void
+    {
+        if ($this->mandate->isAccepted() !== true) {
+            throw new MandateNotAcceptedException();
+        }
+
+        $this->status = Status::active();
+    }
+
+    public function pause(): void
+    {
+        $this->status = Status::paused();
+    }
+
+    public function cancel(): void
+    {
+        $this->status = Status::cancelled();
+    }
+
+    public function setStartDate(DateTimeImmutable $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function setCancelDate(?DateTimeImmutable $cancelDate): void
+    {
+        $this->cancelDate = $cancelDate;
+    }
+
+    public function setResumeDate(?DateTimeImmutable $resumeDate): void
+    {
+        $this->resumeDate = $resumeDate;
+    }
+
+    public function setConfirmationSent(bool $confirmationSent): void
+    {
+        $this->confirmationSent = $confirmationSent;
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -206,12 +251,12 @@ final class Subscription implements SubscriptionInterface
         return $this->mandate;
     }
 
-    public function getStartDate(): DateTimeImmutable
+    public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
     }
 
-    public function getStatus(): Status
+    public function getStatus(): ?Status
     {
         return $this->status;
     }
@@ -231,7 +276,7 @@ final class Subscription implements SubscriptionInterface
         return $this->confirmationPage;
     }
 
-    public function isConfirmationSent(): bool
+    public function isConfirmationSent(): ?bool
     {
         return $this->confirmationSent;
     }

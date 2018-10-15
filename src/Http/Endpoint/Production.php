@@ -26,8 +26,8 @@ final class Production implements MapperInterface
     public const PATCH_SUBSCRIPTION_ENDPOINT = '/subscriptions/%s';
     public const GET_SUBSCRIPTION_TRANSACTIONS_ENDPOINT = 'subscriptions/%s/transactions';
 
-    public const GET_TRANSACTIONS_ENDPOINT = '/transactions';
     public const GET_TRANSACTION_ENDPOINT = '/transactions/%s';
+    public const POST_TRANSACTION_ENDPOINT = '/transactions';
     public const DELETE_TRANSACTION_ENDPOINT = '/transactions/%s';
 
     private $map = [];
@@ -49,8 +49,8 @@ final class Production implements MapperInterface
             MapperInterface::PATCH_SUBSCRIPTION => self::BASE_URL . self::PATCH_SUBSCRIPTION_ENDPOINT,
             MapperInterface::GET_SUBSCRIPTION_TRANSACTIONS => self::BASE_URL . self::GET_SUBSCRIPTION_TRANSACTIONS_ENDPOINT,
 
-            MapperInterface::GET_TRANSACTIONS => self::BASE_URL . self::GET_TRANSACTIONS_ENDPOINT,
             MapperInterface::GET_TRANSACTION => self::BASE_URL . self::GET_TRANSACTION_ENDPOINT,
+            MapperInterface::POST_TRANSACTION => self::BASE_URL . self::POST_TRANSACTION_ENDPOINT,
             MapperInterface::DELETE_TRANSACTION => self::BASE_URL . self::DELETE_TRANSACTION_ENDPOINT,
         ];
     }
