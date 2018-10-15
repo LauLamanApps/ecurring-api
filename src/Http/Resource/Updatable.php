@@ -6,5 +6,4 @@ namespace LauLamanApps\eCurring\Http\Resource;
 
 interface Updatable
 {
-
 }

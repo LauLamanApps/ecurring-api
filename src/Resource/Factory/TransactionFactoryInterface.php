@@ -7,8 +7,8 @@ namespace LauLamanApps\eCurring\Resource\Factory;
 use LauLamanApps\eCurring\eCurringClientInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Subscription;
-use LauLamanApps\eCurring\Resource\TransactionCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
+use LauLamanApps\eCurring\Resource\TransactionCollection;
 
 interface TransactionFactoryInterface
 {

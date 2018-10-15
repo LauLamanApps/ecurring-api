@@ -6,13 +6,13 @@ namespace LauLamanApps\eCurring\Resource\Factory;
 
 use DateTimeImmutable;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactoryInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
+use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactoryInterface;
 use LauLamanApps\eCurring\Resource\Subscription;
-use LauLamanApps\eCurring\Resource\TransactionCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
 use LauLamanApps\eCurring\Resource\Transaction\PaymentMethod;
 use LauLamanApps\eCurring\Resource\Transaction\Status;
+use LauLamanApps\eCurring\Resource\TransactionCollection;
 use Money\Money;
 use Ramsey\Uuid\Uuid;
 

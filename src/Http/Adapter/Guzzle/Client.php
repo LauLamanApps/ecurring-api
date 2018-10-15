@@ -142,9 +142,9 @@ final class Client implements ClientInterface
     /**
      * @throws eCurringException
      */
-    public function deleteEndpoint(string $endpoint, array $data, array $urlBits = null): ResponseInterface
+    public function deleteEndpoint(string $endpoint, array $data, array $urlBits = null): void
     {
-        return $this->delete(
+        $this->delete(
             $this->endpointMapper->map($endpoint, $urlBits),
             ['json' => $data]
         );

@@ -8,5 +8,4 @@ use LauLamanApps\eCurring\Exception\eCurringException;
 
 final class UnPostableEntityException extends eCurringException
 {
-
 }

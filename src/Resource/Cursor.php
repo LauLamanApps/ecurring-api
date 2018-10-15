@@ -122,7 +122,7 @@ abstract class Cursor implements Iterator
     public function nextPage(): void
     {
         $pageNumber = $this->currentPage +1;
-        if ($pageNumber >= $this->totalPages){
+        if ($pageNumber >= $this->totalPages) {
             $this->loadPage($pageNumber, $this->itemsPerPage);
         }
     }

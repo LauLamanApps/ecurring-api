@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
-use LauLamanApps\eCurring\Http\Resource\Updatable;
 use LauLamanApps\eCurring\Http\Resource\Creatable;
+use LauLamanApps\eCurring\Http\Resource\Updatable;
 use LauLamanApps\eCurring\Resource\Exception\MandateNotAcceptedException;
 use LauLamanApps\eCurring\Resource\Subscription\Mandate;
 use LauLamanApps\eCurring\Resource\Subscription\Status;

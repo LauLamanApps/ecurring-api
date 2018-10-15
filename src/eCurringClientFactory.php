@@ -7,14 +7,14 @@ namespace LauLamanApps\eCurring;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use LauLamanApps\eCurring\Http\Adapter\Guzzle\Client as GuzzleClient;
+use LauLamanApps\eCurring\Http\ClientInterface;
+use LauLamanApps\eCurring\Http\Endpoint\Production;
 use LauLamanApps\eCurring\Resource\Factory\CustomerFactory;
 use LauLamanApps\eCurring\Resource\Factory\SubscriptionFactory;
 use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactory;
 use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactory;
 use LauLamanApps\eCurring\Resource\Factory\TransactionFactory;
-use LauLamanApps\eCurring\Http\Adapter\Guzzle\Client as GuzzleClient;
-use LauLamanApps\eCurring\Http\ClientInterface;
-use LauLamanApps\eCurring\Http\Endpoint\Production;
 use Psr\Http\Message\RequestInterface;
 
 final class eCurringClientFactory

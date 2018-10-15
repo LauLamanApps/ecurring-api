@@ -6,8 +6,8 @@ namespace LauLamanApps\eCurring;
 
 use LauLamanApps\eCurring\Http\ClientInterface;
 use LauLamanApps\eCurring\Http\Endpoint\MapperInterface;
-use LauLamanApps\eCurring\Http\Resource\UpdateParserInterface;
 use LauLamanApps\eCurring\Http\Resource\CreateParserInterface;
+use LauLamanApps\eCurring\Http\Resource\UpdateParserInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Customer;
 use LauLamanApps\eCurring\Resource\CustomerCollection;
@@ -19,8 +19,8 @@ use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionCollection;
 use LauLamanApps\eCurring\Resource\SubscriptionPlan;
 use LauLamanApps\eCurring\Resource\SubscriptionPlanCollection;
-use LauLamanApps\eCurring\Resource\TransactionCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
+use LauLamanApps\eCurring\Resource\TransactionCollection;
 use Ramsey\Uuid\UuidInterface;
 
 final class eCurringClient implements eCurringClientInterface
