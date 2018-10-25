@@ -15,7 +15,7 @@ With [composer](http://packagist.org), add:
 ```bash
 $ composer require laulamanapps/ecurring-api
 ```
-This package has been created with flexability in mind, you can simply implement your own http adapter by implementing the `LauLamanApps\eCurring\Http\ClientInterface`
+This package has been created with flexability in mind, you can simply create your own http adapter by implementing the `LauLamanApps\eCurring\Http\ClientInterface`
 
 Don't wanna do the hassle? make use of the provided Guzzle adapter: require guzzlehttp in your composer:
 
