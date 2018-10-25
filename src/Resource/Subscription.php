@@ -96,7 +96,7 @@ final class Subscription implements SubscriptionInterface, Creatable, Updatable
     private $successRedirectUrl;
 
     /**
-     * @var SubscriptionPlanInterface
+     * @var ProductInterface
      *
      * The subscription plan which is attached to the subscription
      */
@@ -140,7 +140,7 @@ final class Subscription implements SubscriptionInterface, Creatable, Updatable
         string $confirmationPage,
         bool $confirmationSent,
         CustomerInterface $customer,
-        SubscriptionPlanInterface $subscriptionPlan,
+        ProductInterface $subscriptionPlan,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt,
         ?string $subscriptionWebhookUrl,
@@ -173,7 +173,7 @@ final class Subscription implements SubscriptionInterface, Creatable, Updatable
 
     public static function new(
         CustomerInterface $customer,
-        SubscriptionPlanInterface $subscriptionPlan,
+        ProductInterface $subscriptionPlan,
         ?Mandate $mandate = null,
         ?DateTimeImmutable $startDate = null,
         ?DateTimeImmutable $cancelDate = null,
@@ -296,7 +296,7 @@ final class Subscription implements SubscriptionInterface, Creatable, Updatable
         return $this->successRedirectUrl;
     }
 
-    public function getSubscriptionPlan(): SubscriptionPlanInterface
+    public function getSubscriptionPlan(): ProductInterface
     {
         return $this->subscriptionPlan;
     }

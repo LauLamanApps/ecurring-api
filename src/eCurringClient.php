@@ -6,19 +6,22 @@ namespace LauLamanApps\eCurring;
 
 use LauLamanApps\eCurring\Http\ClientInterface;
 use LauLamanApps\eCurring\Http\Endpoint\MapperInterface;
+use LauLamanApps\eCurring\Http\Resource\Creatable;
 use LauLamanApps\eCurring\Http\Resource\CreateParserInterface;
+use LauLamanApps\eCurring\Http\Resource\Deletable;
+use LauLamanApps\eCurring\Http\Resource\Updatable;
 use LauLamanApps\eCurring\Http\Resource\UpdateParserInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Customer;
 use LauLamanApps\eCurring\Resource\CustomerCollection;
 use LauLamanApps\eCurring\Resource\Factory\CustomerFactoryInterface;
+use LauLamanApps\eCurring\Resource\Factory\ProductFactoryInterface;
 use LauLamanApps\eCurring\Resource\Factory\SubscriptionFactoryInterface;
-use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactoryInterface;
 use LauLamanApps\eCurring\Resource\Factory\TransactionFactoryInterface;
+use LauLamanApps\eCurring\Resource\Product;
+use LauLamanApps\eCurring\Resource\ProductCollection;
 use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionCollection;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan;
-use LauLamanApps\eCurring\Resource\SubscriptionPlanCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
 use LauLamanApps\eCurring\Resource\TransactionCollection;
 use Ramsey\Uuid\UuidInterface;
@@ -31,7 +34,7 @@ final class eCurringClient implements eCurringClientInterface
     private $httpClient;
 
     /**
-     * @var SubscriptionPlanFactoryInterface
+     * @var ProductFactoryInterface
      */
     private $subscriptionPlanFactory;
 
@@ -64,7 +67,7 @@ final class eCurringClient implements eCurringClientInterface
         ClientInterface $httpClient,
         CustomerFactoryInterface $customerFactory,
         SubscriptionFactoryInterface $subscriptionFactory,
-        SubscriptionPlanFactoryInterface $subscriptionPlanFactory,
+        ProductFactoryInterface $subscriptionPlanFactory,
         TransactionFactoryInterface $transactionFactory,
         CreateParserInterface $createParser,
         UpdateParserInterface $updateParser
@@ -76,6 +79,36 @@ final class eCurringClient implements eCurringClientInterface
         $this->transactionFactory = $transactionFactory;
         $this->createParser = $createParser;
         $this->updateParser = $updateParser;
+    }
+
+    public function create(Creatable $entity): Creatable
+    {
+        switch (true) {
+            case $entity instanceof Customer:
+                return $this->createCustomer($entity);
+            case $entity instanceof Subscription:
+                return $this->createSubscription($entity);
+            case $entity instanceof Transaction:
+                return $this->createTransaction($entity);
+        }
+    }
+
+    public function update(Updatable $entity): Updatable
+    {
+        switch (true) {
+            case $entity instanceof Customer:
+                return $this->updateCustomer($entity);
+            case $entity instanceof Subscription:
+                return $this->updateSubscription($entity);
+        }
+    }
+
+    public function delete(Deletable $entity): void
+    {
+        switch (true) {
+            case $entity instanceof Transaction:
+                $this->deleteTransaction($entity);
+        }
     }
 
     public function getCustomers(?Pagination $pagination = null): CustomerCollection
@@ -97,32 +130,10 @@ final class eCurringClient implements eCurringClientInterface
             $this->httpClient->getEndpoint(MapperInterface::GET_CUSTOMER, [$id])
         );
 
-        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json));
+        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
     }
 
-    public function createCustomer(Customer $customer): Customer
-    {
-        $data = $this->createParser->parse($customer);
-
-        $json = $this->httpClient->getJson(
-            $this->httpClient->postEndpoint(MapperInterface::POST_CUSTOMER, $data [$customer->getId()])
-        );
-
-        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json));
-    }
-
-    public function updateCustomer(Customer $customer): Customer
-    {
-        $data = $this->updateParser->parse($customer);
-
-        $json = $this->httpClient->getJson(
-            $this->httpClient->patchEndpoint(MapperInterface::PATCH_CUSTOMER, $data [$customer->getId()])
-        );
-
-        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json));
-    }
-
-    public function getSubscriptionPlans(?Pagination $pagination = null): SubscriptionPlanCollection
+    public function getProducts(?Pagination $pagination = null): ProductCollection
     {
         $json = $this->httpClient->getJson(
             $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_PLANS, [], $pagination)
@@ -135,13 +146,13 @@ final class eCurringClient implements eCurringClientInterface
         );
     }
 
-    public function getSubscriptionPlan(string $id): SubscriptionPlan
+    public function getProduct(string $id): Product
     {
         $json = $this->httpClient->getJson(
             $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_PLAN, [$id])
         );
 
-        return $this->subscriptionPlanFactory->fromData($this, $this->decodeJsonToArray($json));
+        return $this->subscriptionPlanFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
     }
 
     public function getSubscriptions(?Pagination $page = null): SubscriptionCollection
@@ -163,7 +174,7 @@ final class eCurringClient implements eCurringClientInterface
             $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION, [$id])
         );
 
-        return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json));
+        return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
     }
 
     public function getSubscriptionTransactions(Subscription $subscription, ?Pagination $pagination = null): TransactionCollection
@@ -180,49 +191,69 @@ final class eCurringClient implements eCurringClientInterface
         );
     }
 
-    public function createSubscription(Subscription $subscription): Subscription
-    {
-        $data = $this->createParser->parse($subscription);
-
-        $json = $this->httpClient->getJson(
-            $this->httpClient->postEndpoint(MapperInterface::POST_SUBSCRIPTION, $data [$subscription->getId()])
-        );
-
-        return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json));
-    }
-
-    public function updateSubscription(Subscription $subscription): Subscription
-    {
-        $data = $this->updateParser->parse($subscription);
-
-        $json = $this->httpClient->getJson(
-            $this->httpClient->patchEndpoint(MapperInterface::PATCH_SUBSCRIPTION, $data [$subscription->getId()])
-        );
-
-        return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json));
-    }
-
     public function getTransaction(UuidInterface $id): Transaction
     {
         $json = $this->httpClient->getJson(
             $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_PLAN, [$id])
         );
 
-        return $this->transactionFactory->fromData($this->decodeJsonToArray($json));
+        return $this->transactionFactory->fromData($this->decodeJsonToArray($json)['data']);
     }
 
-    public function createTransaction(Transaction $transaction): Transaction
+    private function createCustomer(Customer $customer): Customer
+    {
+        $data = $this->createParser->parse($customer);
+        
+        $json = $this->httpClient->getJson(
+            $this->httpClient->postEndpoint(MapperInterface::POST_CUSTOMER, $data)
+        );
+
+        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
+    }
+    private function updateCustomer(Customer $customer): Customer
+    {
+        $data = $this->updateParser->parse($customer);
+
+        $json = $this->httpClient->getJson(
+            $this->httpClient->patchEndpoint(MapperInterface::PATCH_CUSTOMER, $data, [$customer->getId()])
+        );
+
+        return $this->customerFactory->fromData($this, $this->decodeJsonToArray($json));
+    }
+    private function createSubscription(Subscription $subscription): Subscription
+    {
+        $data = $this->createParser->parse($subscription);
+
+        $json = $this->httpClient->getJson(
+            $this->httpClient->postEndpoint(MapperInterface::POST_SUBSCRIPTION, $data)
+        );
+
+        return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
+    }
+
+    private function updateSubscription(Subscription $subscription): Subscription
+    {
+        $data = $this->updateParser->parse($subscription);
+
+        $json = $this->httpClient->getJson(
+            $this->httpClient->patchEndpoint(MapperInterface::PATCH_SUBSCRIPTION, $data, [$subscription->getId()])
+        );
+
+        return $this->subscriptionFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
+    }
+
+    private function createTransaction(Transaction $transaction): Transaction
     {
         $data = $this->createParser->parse($transaction);
 
         $json = $this->httpClient->getJson(
-            $this->httpClient->postEndpoint(MapperInterface::POST_TRANSACTION, $data [$transaction->getId()])
+            $this->httpClient->postEndpoint(MapperInterface::POST_TRANSACTION, $data)
         );
 
-        return $this->transactionFactory->fromData($this, $this->decodeJsonToArray($json));
+        return $this->transactionFactory->fromData($this, $this->decodeJsonToArray($json)['data']);
     }
 
-    public function deleteTransaction(Transaction $transaction): void
+    private function deleteTransaction(Transaction $transaction): void
     {
         $this->httpClient->deleteEndpoint(MapperInterface::DELETE_TRANSACTION, [$transaction->getId()]);
     }

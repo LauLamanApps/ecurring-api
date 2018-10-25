@@ -87,7 +87,12 @@ final class CreateParser implements CreateParserInterface
             $data['telephone '] = $customer->getTelephone();
         }
 
-        return $data;
+        return [
+            'data' => [
+                'type' => 'customer',
+                'attributes' => $data
+            ]
+        ];
     }
 
     /**
@@ -146,7 +151,12 @@ final class CreateParser implements CreateParserInterface
             $data['success_redirect_url '] = $subscription->getSuccessRedirectUrl();
         }
 
-        return $data;
+        return [
+            'data' => [
+                'type' => 'subscription',
+                'attributes' => $data
+            ]
+        ];
     }
 
     /**

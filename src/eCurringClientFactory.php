@@ -10,9 +10,11 @@ use GuzzleHttp\Middleware;
 use LauLamanApps\eCurring\Http\Adapter\Guzzle\Client as GuzzleClient;
 use LauLamanApps\eCurring\Http\ClientInterface;
 use LauLamanApps\eCurring\Http\Endpoint\Production;
+use LauLamanApps\eCurring\Http\Resource\CreateParser;
+use LauLamanApps\eCurring\Http\Resource\UpdateParser;
 use LauLamanApps\eCurring\Resource\Factory\CustomerFactory;
+use LauLamanApps\eCurring\Resource\Factory\ProductFactory;
 use LauLamanApps\eCurring\Resource\Factory\SubscriptionFactory;
-use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactory;
 use LauLamanApps\eCurring\Resource\Factory\Transaction\EventFactory;
 use LauLamanApps\eCurring\Resource\Factory\TransactionFactory;
 use Psr\Http\Message\RequestInterface;
@@ -25,8 +27,10 @@ final class eCurringClientFactory
             self::createHttpClient($apiKey),
             new CustomerFactory(),
             new SubscriptionFactory(),
-            new SubscriptionPlanFactory(),
-            new TransactionFactory(new EventFactory())
+            new ProductFactory(),
+            new TransactionFactory(new EventFactory()),
+            new CreateParser(),
+            new UpdateParser()
         );
     }
 

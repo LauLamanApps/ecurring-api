@@ -6,7 +6,7 @@ namespace LauLamanApps\eCurring\Tests\Unit\Client\Factory;
 
 use DateTime;
 use LauLamanApps\eCurring\eCurringClientInterface;
-use LauLamanApps\eCurring\Resource\Factory\SubscriptionPlanFactory;
+use LauLamanApps\eCurring\Resource\Factory\ProductFactory;
 use LauLamanApps\eCurring\Resource\SubscriptionInterface;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\AssertionTrait;
 use LauLamanApps\eCurring\Tests\Unit\_helpers\TestDataLoaderTrait;
@@ -39,7 +39,7 @@ final class SubscriptionPlanFactoryTest extends TestCase
      */
     public function fromData(array $data): void
     {
-        $factory = new SubscriptionPlanFactory();
+        $factory = new ProductFactory();
 
         $subscriptionPlan = $factory->fromData($this->client, $data['data']);
 

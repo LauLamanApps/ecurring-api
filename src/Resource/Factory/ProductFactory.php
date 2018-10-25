@@ -7,15 +7,15 @@ namespace LauLamanApps\eCurring\Resource\Factory;
 use DateTimeImmutable;
 use LauLamanApps\eCurring\eCurringClientInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
+use LauLamanApps\eCurring\Resource\Product;
+use LauLamanApps\eCurring\Resource\Product\AuthenticationMethod;
+use LauLamanApps\eCurring\Resource\Product\Status;
+use LauLamanApps\eCurring\Resource\ProductCollection;
 use LauLamanApps\eCurring\Resource\Proxy\SubscriptionProxy;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\AuthenticationMethod;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\Status;
-use LauLamanApps\eCurring\Resource\SubscriptionPlanCollection;
 
-final class SubscriptionPlanFactory extends AbstractFactory implements SubscriptionPlanFactoryInterface
+final class ProductFactory extends AbstractFactory implements ProductFactoryInterface
 {
-    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): SubscriptionPlanCollection
+    public function fromArray(eCurringClientInterface $client, array $data, Pagination $page): ProductCollection
     {
         $transactions = [];
         foreach ($data['data'] as $data) {
@@ -24,12 +24,12 @@ final class SubscriptionPlanFactory extends AbstractFactory implements Subscript
 
         $totalPages = $data['meta']['total'];
 
-        return new SubscriptionPlanCollection($client, $page->getNumber(), $totalPages ?? 1, $transactions, $page->getSize());
+        return new ProductCollection($client, $page->getNumber(), $totalPages ?? 1, $transactions, $page->getSize());
     }
 
-    public function fromData(eCurringClientInterface $client, array $data): SubscriptionPlan
+    public function fromData(eCurringClientInterface $client, array $data): Product
     {
-        return new SubscriptionPlan(
+        return new Product(
             $this->extractInteger('id', $data),
             $data['attributes']['name'],
             $data['attributes']['description'],

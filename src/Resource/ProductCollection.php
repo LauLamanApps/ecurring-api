@@ -7,13 +7,13 @@ namespace LauLamanApps\eCurring\Resource;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 
 /**
- * @method SubscriptionPlan[] getAll()
- * @method SubscriptionPlan current()
+ * @method Product[] getAll()
+ * @method Product current()
  */
-final class SubscriptionPlanCollection extends Cursor
+final class ProductCollection extends Cursor
 {
     protected function getPageData(int $pageNumber, int $itemsPerPage): Cursor
     {
-        return $this->client->getSubscriptionPlans(new Pagination($itemsPerPage, $pageNumber));
+        return $this->client->getProducts(new Pagination($itemsPerPage, $pageNumber));
     }
 }

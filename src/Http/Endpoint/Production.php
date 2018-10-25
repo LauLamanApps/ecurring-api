@@ -63,6 +63,8 @@ final class Production implements MapperInterface
             throw new EndpointCouldNotBeMappedException(sprintf('key \'%s\' could not be mapped to an URL', $key));
         }
 
+        $bits = $bits ?? [];
+
         return sprintf($url, ...$bits);
     }
 }

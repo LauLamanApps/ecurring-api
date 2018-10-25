@@ -177,8 +177,19 @@ final class Client implements ClientInterface
                 return;
 
                 break;
+            case 201:
+                return;
+
+                break;
             default:
-                throw new ApiCallException($response-> getStatusCode() . ' ' . $response->getReasonPhrase());
+                throw new ApiCallException(
+                    sprintf(
+                        '%s %s: %s',
+                        $response->getStatusCode(),
+                        $response->getReasonPhrase(),
+                        $response->getBody()->getContents()
+                    )
+                );
         }
     }
 }

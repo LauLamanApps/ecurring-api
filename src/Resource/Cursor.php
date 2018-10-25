@@ -31,7 +31,7 @@ abstract class Cursor implements Iterator
     private $position;
 
     /**
-     * @var Customer[]|Subscription[]|SubscriptionPlan[]|Transaction[]
+     * @var Customer[]|Subscription[]|Product[]|Transaction[]
      */
     private $objects;
 

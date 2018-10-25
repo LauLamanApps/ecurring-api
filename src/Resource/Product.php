@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\AuthenticationMethod;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\Status;
+use LauLamanApps\eCurring\Resource\Product\AuthenticationMethod;
+use LauLamanApps\eCurring\Resource\Product\Status;
 
-final class SubscriptionPlan implements SubscriptionPlanInterface
+final class Product implements ProductInterface
 {
     /**
      * @var int

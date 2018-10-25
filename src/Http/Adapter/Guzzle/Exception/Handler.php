@@ -16,10 +16,12 @@ final class Handler
     public static function handleRequestException(RequestException $exception): void
     {
         switch ($exception->getCode()) {
+            case 400:
+                throw new BadRequestException();
             case 404:
                 throw new NotFoundException();
         }
 
-        throw new eCurringException($exception->getMessage());
+        throw new eCurringException($exception->getMessage(), $exception->getCode(), $exception);
     }
 }

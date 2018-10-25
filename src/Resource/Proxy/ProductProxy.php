@@ -6,11 +6,11 @@ namespace LauLamanApps\eCurring\Resource\Proxy;
 
 use DateTimeImmutable;
 use LauLamanApps\eCurring\eCurringClientInterface;
+use LauLamanApps\eCurring\Resource\Product;
+use LauLamanApps\eCurring\Resource\Product\AuthenticationMethod;
+use LauLamanApps\eCurring\Resource\Product\Status;
+use LauLamanApps\eCurring\Resource\ProductInterface;
 use LauLamanApps\eCurring\Resource\SubscriptionInterface;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\AuthenticationMethod;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\Status;
-use LauLamanApps\eCurring\Resource\SubscriptionPlanInterface;
 
 /**
  * @method int getId()
@@ -26,13 +26,13 @@ use LauLamanApps\eCurring\Resource\SubscriptionPlanInterface;
  * @method DateTimeImmutable getCreatedAt()
  * @method DateTimeImmutable getUpdatedAt()
  */
-final class SubscriptionPlanProxy extends AbstractProxy implements SubscriptionPlanInterface
+final class ProductProxy extends AbstractProxy implements ProductInterface
 {
     /**
-     * @return SubscriptionPlan
+     * @return Product
      */
     protected function __load(eCurringClientInterface $client, string $id)
     {
-        return $client->getSubscriptionPlan($id);
+        return $client->getProduct($id);
     }
 }

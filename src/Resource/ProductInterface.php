@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\AuthenticationMethod;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan\Status;
+use LauLamanApps\eCurring\Resource\Product\AuthenticationMethod;
+use LauLamanApps\eCurring\Resource\Product\Status;
 
 /**
  * @method int getId()
@@ -22,6 +22,6 @@ use LauLamanApps\eCurring\Resource\SubscriptionPlan\Status;
  * @method DateTimeImmutable getCreatedAt()
  * @method DateTimeImmutable getUpdatedAt()
  */
-interface SubscriptionPlanInterface
+interface ProductInterface
 {
 }

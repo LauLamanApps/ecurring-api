@@ -6,13 +6,14 @@ namespace LauLamanApps\eCurring\Resource;
 
 use DateTimeImmutable;
 use LauLamanApps\eCurring\Http\Resource\Creatable;
+use LauLamanApps\eCurring\Http\Resource\Deletable;
 use LauLamanApps\eCurring\Resource\Transaction\Event;
 use LauLamanApps\eCurring\Resource\Transaction\PaymentMethod;
 use LauLamanApps\eCurring\Resource\Transaction\Status;
 use Money\Money;
 use Ramsey\Uuid\UuidInterface;
 
-final class Transaction implements TransactionInterface, Creatable
+final class Transaction implements TransactionInterface, Creatable, Deletable
 {
     /**
      * @var UuidInterface

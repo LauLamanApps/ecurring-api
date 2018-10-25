@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use LauLamanApps\eCurring\eCurringClientInterface;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Proxy\CustomerProxy;
-use LauLamanApps\eCurring\Resource\Proxy\SubscriptionPlanProxy;
+use LauLamanApps\eCurring\Resource\Proxy\ProductProxy;
 use LauLamanApps\eCurring\Resource\Proxy\TransactionProxy;
 use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\Subscription\Mandate;
@@ -60,13 +60,13 @@ final class SubscriptionFactory extends AbstractFactory implements SubscriptionF
         );
     }
 
-    private function getSubscriptionPlanProxy(eCurringClientInterface $client, array $relationships): SubscriptionPlanProxy
+    private function getSubscriptionPlanProxy(eCurringClientInterface $client, array $relationships): ProductProxy
     {
         if (!isset($relationships['subscription-plan'])) {
             throw new InvalidArgumentException('customer not found in data');
         }
 
-        return new SubscriptionPlanProxy($client, $relationships['subscription-plan']['data']['id']);
+        return new ProductProxy($client, $relationships['subscription-plan']['data']['id']);
     }
 
     private function getCustomerProxy(eCurringClientInterface $client, array $relationships): CustomerProxy

@@ -4,19 +4,35 @@ declare(strict_types=1);
 
 namespace LauLamanApps\eCurring;
 
+use LauLamanApps\eCurring\Http\Resource\Creatable;
+use LauLamanApps\eCurring\Http\Resource\Deletable;
+use LauLamanApps\eCurring\Http\Resource\Updatable;
 use LauLamanApps\eCurring\Resource\Curser\Pagination;
 use LauLamanApps\eCurring\Resource\Customer;
 use LauLamanApps\eCurring\Resource\CustomerCollection;
+use LauLamanApps\eCurring\Resource\Product;
+use LauLamanApps\eCurring\Resource\ProductCollection;
 use LauLamanApps\eCurring\Resource\Subscription;
 use LauLamanApps\eCurring\Resource\SubscriptionCollection;
-use LauLamanApps\eCurring\Resource\SubscriptionPlan;
-use LauLamanApps\eCurring\Resource\SubscriptionPlanCollection;
 use LauLamanApps\eCurring\Resource\Transaction;
 use LauLamanApps\eCurring\Resource\TransactionCollection;
 use Ramsey\Uuid\UuidInterface;
 
 interface eCurringClientInterface
 {
+
+    /**
+     * @return Customer|Subscription|Transaction
+     */
+    public function create(Creatable $entity): Creatable;
+
+    /**
+     * @return Customer|Subscription
+     */
+    public function update(Updatable $entity): Updatable;
+
+    public function delete(Deletable $entity): void;
+
     /**
      * @return Customer[]
      */
@@ -24,16 +40,12 @@ interface eCurringClientInterface
 
     public function getCustomer(string $id): Customer;
 
-    public function createCustomer(Customer $customer): Customer;
-
-    public function updateCustomer(Customer $customer): Customer;
-
     /**
-     * @return SubscriptionPlan[]
+     * @return Product[]
      */
-    public function getSubscriptionPlans(?Pagination $pagination = null): SubscriptionPlanCollection;
+    public function getProducts(?Pagination $pagination = null): ProductCollection;
 
-    public function getSubscriptionPlan(string $id): SubscriptionPlan;
+    public function getProduct(string $id): Product;
 
     /**
      * @return Subscription[]
@@ -47,13 +59,5 @@ interface eCurringClientInterface
      */
     public function getSubscriptionTransactions(Subscription $subscription, ?Pagination $pagination = null): TransactionCollection;
 
-    public function createSubscription(Subscription $subscription): Subscription;
-
-    public function updateSubscription(Subscription $subscription): Subscription;
-
     public function getTransaction(UuidInterface $id): Transaction;
-
-    public function createTransaction(Transaction $transaction): Transaction;
-
-    public function deleteTransaction(Transaction $transaction): void;
 }
