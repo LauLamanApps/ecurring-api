@@ -56,7 +56,7 @@ final class SubscriptionFactory extends AbstractFactory implements SubscriptionF
         return new Mandate(
             $data['mandate_code'],
             $this->extractBoolean('mandate_accepted', $data),
-            new DateTimeImmutable($data['mandate_accepted_date'])
+            $this->extractDateTimeImmutableOrNull('mandate_accepted_date', $data)
         );
     }
 
