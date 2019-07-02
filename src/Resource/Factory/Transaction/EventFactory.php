@@ -10,5 +10,6 @@ final class EventFactory implements EventFactoryInterface
 {
     public function fromArray(array $data): array
     {
+        return [];
     }
 }

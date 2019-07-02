@@ -46,7 +46,7 @@ final class SubscriptionFactoryTest extends TestCase
         self::assertEquals($data['data']['id'], $subscriptionPlan->getId());
         self::assertSame($data['data']['attributes']['mandate_code'], $subscriptionPlan->getMandate()->getCode());
         self::assertSame($data['data']['attributes']['mandate_accepted'], $subscriptionPlan->getMandate()->isAccepted());
-        self::assertSame($data['data']['attributes']['mandate_accepted_date'], $subscriptionPlan->getMandate()->getAcceptedDate()->format(DateTime::ATOM));
+        self::assertDateTimeOrNull($data['data']['attributes']['mandate_accepted_date'], $subscriptionPlan->getMandate()->getAcceptedDate());
         self::assertSame($data['data']['attributes']['start_date'], $subscriptionPlan->getStartDate()->format(DateTime::ATOM));
         self::assertSame($data['data']['attributes']['status'], $subscriptionPlan->getStatus()->getValue());
         self::assertSame($data['data']['attributes']['confirmation_page'], $subscriptionPlan->getConfirmationPage());
@@ -75,7 +75,8 @@ final class SubscriptionFactoryTest extends TestCase
     public function getTransactionData(): array
     {
         return [
-            'subscription' => [$this->getDataFromFile('subscription.json')],
+            [$this->getDataFromFile('subscription.json')],
+            [$this->getDataFromFile('subscription_mandate_is_not_accepted.json')],
         ];
     }
 }
