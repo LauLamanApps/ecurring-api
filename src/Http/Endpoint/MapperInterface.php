@@ -23,7 +23,7 @@ interface MapperInterface
     public const GET_SUBSCRIPTION_TRANSACTIONS = 'get_subscription_transactions';
 
     public const GET_TRANSACTION = 'get_transaction';
-    public const POST_TRANSACTION = 'get_transaction';
+    public const POST_TRANSACTION = 'post_transaction';
     public const DELETE_TRANSACTION = 'delete_transactions';
 
     /**

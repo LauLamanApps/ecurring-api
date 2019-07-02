@@ -191,10 +191,15 @@ final class eCurringClient implements eCurringClientInterface
         );
     }
 
+    /**
+     * @param UuidInterface $id
+     * @return Transaction
+     * @throws Http\Exception\ApiCallException
+     */
     public function getTransaction(UuidInterface $id): Transaction
     {
         $json = $this->httpClient->getJson(
-            $this->httpClient->getEndpoint(MapperInterface::GET_SUBSCRIPTION_PLAN, [$id])
+            $this->httpClient->getEndpoint(MapperInterface::GET_TRANSACTION, [$id])
         );
 
         return $this->transactionFactory->fromData($this->decodeJsonToArray($json)['data']);
